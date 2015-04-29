@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:text="Image Upload"
+        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/aaa" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LableUser"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10px" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Select Image"
+        android:id="@+id/selimg"/>
+    <ImageView
+        android:layout_width="400px"
+        android:layout_height="250px"
+        android:layout_gravity="center"
+        android:id="@+id/img"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Album List"
+        android:id="@+id/AlbumList"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/finalAlbum"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Upload Image"
+        android:id="@+id/uploadimg"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show my uploads"
+        android:id="@+id/getImage"
+        android:layout_gravity="center_horizontal" />
+
+
+    <Button
+        android:layout_width="159dp"
+        android:layout_height="wrap_content"
+        android:text="Other Options"
+        android:id="@+id/OtherOptions"
+        android:layout_gravity="center_horizontal" />
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
+
+
+</LinearLayout>
