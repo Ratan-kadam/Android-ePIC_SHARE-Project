@@ -4,4 +4,32 @@
     tools:context="com.example.ratan_000.imageupload.ShowMyAlbums">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_plus"
+        android:icon="@drawable/plus"
+        android:title="AddAlbum"
+        app:showAsAction="always" />
+
+
+    <item android:id="@+id/action_share"
+        android:icon="@drawable/share"
+        android:title="AddAlbum"
+        app:showAsAction="always" />
+
+
+    <item android:id="@+id/Menu_showSharedAlbum"
+        android:icon="@drawable/share"
+        android:title="Shared Album"
+        app:showAsAction="never" />
+
+
+
+    <item android:id="@+id/Menu_gotoShareWithGroup"
+        android:icon="@drawable/share"
+        android:title="Share Album with Group"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/Menu_DeleteAlbum"
+        android:icon="@drawable/share"
+        android:title="Delete Album"
+        app:showAsAction="never" />
 </menu>

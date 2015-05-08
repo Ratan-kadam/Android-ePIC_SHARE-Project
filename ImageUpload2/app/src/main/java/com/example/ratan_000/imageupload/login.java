@@ -1,11 +1,11 @@
 package com.example.ratan_000.imageupload;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,19 +24,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +33,10 @@ import java.util.List;
 
 public class login extends ActionBarActivity {
 
-    Button ButtonLogin,ButtonSignUP,ButtonLogin1;
+    Button ButtonLogin,ButtonSignUP,ButtonLogin1,LogOut;
     EditText EmailID,Password;
     SharedPreferences sharedpref;
-
+    String ipAddress = "http://52.24.17.228:3000/";
 
 
     @Override
@@ -61,6 +50,21 @@ public class login extends ActionBarActivity {
         EmailID = (EditText) findViewById(R.id.TextEmail);
         Password = (EditText) findViewById(R.id.TextPassword);
         ButtonSignUP = (Button)findViewById(R.id.ButtonSignUp);
+        LogOut = (Button)findViewById(R.id.LogoutButton);
+
+        LogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("dd", "Clicked logout** button");
+
+                EmailID.setText("");
+                Password.setText("");
+
+                Toast.makeText(getApplicationContext(),"User Logged Out ..",Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
 
         ButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,10 +274,12 @@ public class login extends ActionBarActivity {
 
     public void signIn()
     {
+
+//        Toast.makeText(getApplicationContext(),"overriding login.. ",Toast.LENGTH_LONG).show();
         Log.e("re","reached");
         String Return_code = "";
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.0.0.24:3000/signIn");
+        HttpPost httppost = new HttpPost(ipAddress + "signIn");
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -288,23 +294,25 @@ public class login extends ActionBarActivity {
             Log.e("Return_code", a+"");
            if(a.equals("success")){
                 //if(true){// testing purpose
+               handlerGet33.sendEmptyMessage(0);
                 Log.e("data","SuccessFull Login");
-                Intent window2 = new Intent(getApplicationContext(),MainActivity.class);
+                /*Intent window2 = new Intent(getApplicationContext(),MainActivity.class);
                 Log.e("EMail Extraction ",EmailID.getText()+"");
-                window2.putExtra("Email-id",EmailID.getText()+""); // Sending Email ID to window2 Location.
+                window2.putExtra("Email-id",EmailID.getText()+""); // Sending Email ID to window2 Location.*/
 
-               sharedpref = getSharedPreferences("Albuminfo", Context.MODE_PRIVATE);
+              /* sharedpref = getSharedPreferences("Albuminfo", Context.MODE_PRIVATE);
                SharedPreferences.Editor editor = sharedpref.edit();
                Log.e("Shared pref val:", EmailID.getText().toString());
                editor.putString("UserLoginInfo", EmailID.getText().toString());
                editor.apply();
                editor.commit();
-                startActivity(window2);
+                startActivity(window2);*/
 
             }
             else
             {
-                Toast.makeText(getApplicationContext(),"Wrong UserID / Password",Toast.LENGTH_SHORT).show();
+                handlerGet33.sendEmptyMessage(-1);
+            //    Toast.makeText(login.this,"Wrong UserID / Password",Toast.LENGTH_SHORT).show();
                 Log.d("errr","wrong userID / Password");
             }
 
@@ -314,5 +322,28 @@ public class login extends ActionBarActivity {
             e.printStackTrace();
             // TODO Auto-generated catch block
         }
+    }
+
+    Handler handlerGet33 = new Handler() {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            if(msg.what == 0) {
+                Intent window2 = new Intent(getApplicationContext(), MainActivity.class);
+                window2.putExtra("Email-id", EmailID.getText() + "");
+                // window2.putExtra("Email-id","ratan"); // Sending Email ID to window2 Location.
+                startActivity(window2);
+                overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            }
+            else{
+                Toast.makeText(login.this,"Wrong UserID / Password",Toast.LENGTH_LONG).show();
+            }
+        }
+
+    };
+
+    public void onBackPressed() {
+        //doing nothing on pressing Back key
+        return;
     }
 }

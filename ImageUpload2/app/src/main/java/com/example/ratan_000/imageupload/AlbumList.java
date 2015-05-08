@@ -3,10 +3,10 @@ package com.example.ratan_000.imageupload;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,23 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class AlbumList extends ActionBarActivity {
@@ -44,6 +33,7 @@ public class AlbumList extends ActionBarActivity {
     TextView AlbumSelected;
     SharedPreferences sharedpref;
     String UserLogin;
+    String ipAddress = "http://52.24.17.228:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +54,6 @@ public class AlbumList extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -83,6 +72,15 @@ public class AlbumList extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id. CreateAlbum) {
+           Log.e("Entered","PPPPPP");
+            Toast.makeText(getApplicationContext(),"Entered to Create Album..,",Toast.LENGTH_SHORT).show();
+            Intent CreateAlbum = new Intent(getApplicationContext(),CreateAlbum.class);
+            CreateAlbum.putExtra("UserFromPrevWindow", UserLogin+"");
+            Log.e("Sending xxx",UserLogin);
+            startActivity(CreateAlbum);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -97,7 +95,7 @@ public class AlbumList extends ActionBarActivity {
         try {
 
 
-            String downLoadUri = "http://10.0.0.24:3000/getListAlbum?username=" + UserLogin ;
+            String downLoadUri = ipAddress + "getListAlbum?username=" + UserLogin ;
 
             URL url = new URL(downLoadUri);
 
@@ -185,6 +183,7 @@ public class AlbumList extends ActionBarActivity {
                    sharedpref = getSharedPreferences("Albuminfo", Context.MODE_PRIVATE);
                    SharedPreferences.Editor editor = sharedpref.edit();
                    editor.putString("AlbumSelected",tview.getText().toString());
+                    editor.putInt("flag",1);
                     editor.apply();
                     Toast.makeText(getApplicationContext(),"selected-Album :" + tview.getText().toString(),Toast.LENGTH_LONG ).show();
                     finish();
@@ -193,6 +192,7 @@ public class AlbumList extends ActionBarActivity {
 
         }
     };
+
 }
 
 

@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bj_c"
+    android:alpha=".70"
+    tools:context="com.example.ratan_000.imageupload.shareAlbumwithGroup"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Share Album With Group"
+        android:id="@+id/textView13"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center|center_horizontal"
+        android:textColor="#ff3610a0" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView15"
+        android:textColor="#ff3610a0"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center" />
+
+    <ListView
+        android:layout_width="274dp"
+        android:layout_height="161dp"
+        android:id="@+id/ListGroupShareAlbums"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_weight="0.76" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView14"
+        android:textColor="#ff3610a0"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center" />
+
+    <ListView
+        android:layout_width="240dp"
+        android:layout_height="172dp"
+        android:id="@+id/ListGroups"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Share Album "
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:id="@+id/GroupShare"
+        android:background="#ff3610a0"
+        android:textColor="#fffbfff8" />
+</LinearLayout>

@@ -21,8 +21,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".login"
-            android:label="@string/app_name" >
+            android:name=".LogoPage"
+            android:label="WELCOME TO ePIC SHARE" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,18 +36,15 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_login" >
-            <uses-permission android:name="android.permission.INTERNET" />
+            android:label="Image_Upload" >
         </activity>
         <activity
             android:name=".SignUP"
             android:label="@string/title_activity_sign_up" >
-            <uses-permission android:name="android.permission.INTERNET" />
         </activity>
         <activity
             android:name=".AlbumList"
             android:label="@string/title_activity_album_list" >
-            <uses-permission android:name="android.permission.INTERNET" />
         </activity>
         <activity
             android:name=".options"
@@ -64,6 +61,68 @@
         <activity
             android:name=".SharingAlubumWithFriend"
             android:label="@string/title_activity_sharing_alubum_with_friend" >
+        </activity>
+        <activity
+            android:name=".ShowMyAlbums"
+            android:label="@string/title_activity_show_my_albums" >
+        </activity>
+        <activity
+            android:name=".ZoomImage"
+            android:label="@string/title_activity_zoom_image" >
+        </activity>
+        <activity
+            android:name=".CreateAlbum"
+            android:label="@string/title_activity_create_album" >
+        </activity>
+        <activity
+            android:name=".CreateGroup"
+            android:label="@string/title_activity_create_group" >
+        </activity>
+        <activity
+            android:name=".crtegrp"
+            android:label="@string/title_activity_crtegrp" >
+        </activity>
+        <activity
+            android:name=".login"
+            android:label="Login Page" >
+        </activity>
+        <activity
+            android:name=".searchImage"
+            android:label="@string/title_activity_search_image" >
+        </activity>
+        <activity
+            android:name=".shareAlbumwithGroup"
+            android:label="@string/title_activity_share_albumwith_group" >
+        </activity>
+        <!--
+        <activity
+            android:name=".AddMembersToGroup"
+            android:label="@string/title_activity_add_members_to_group" >
+        </activity>
+        -->
+        <activity
+            android:name=".addMember2"
+            android:label="@string/title_activity_add_member2" >
+        </activity>
+        <activity
+            android:name=".showMyGroupMembers"
+            android:label="@string/title_activity_show_my_group_members" >
+        </activity>
+        <activity
+            android:name=".DeleteActivity"
+            android:label="@string/title_activity_delete" >
+        </activity>
+        <activity
+            android:name=".showMyFriends"
+            android:label="@string/title_activity_show_my_friends" >
+        </activity>
+        <activity
+            android:name=".DeleteAlbum"
+            android:label="@string/title_activity_delete_album" >
+        </activity>
+        <activity
+            android:name=".invite"
+            android:label="@string/title_activity_invite" >
         </activity>
     </application>
 

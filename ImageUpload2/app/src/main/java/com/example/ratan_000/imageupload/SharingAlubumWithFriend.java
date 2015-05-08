@@ -45,6 +45,8 @@ public class SharingAlubumWithFriend extends ActionBarActivity {
     String UserFromPrevWindow;
     SharedPreferences sharedpref;
     Button Share;
+    String ipAddress = "http://52.24.17.228:3000/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +133,7 @@ public class SharingAlubumWithFriend extends ActionBarActivity {
         try {
 
 
-            String downLoadUri = "http://10.0.0.24:3000/getListAlbum?username=" + UserFromPrevWindow ;
+            String downLoadUri = ipAddress + "getListAlbum?username=" + UserFromPrevWindow ;
 
             URL url = new URL(downLoadUri);
 
@@ -239,7 +241,7 @@ Handler handler = new Handler() {
         try {
 
 
-            String downLoadUri = "http://10.0.0.24:3000/getMyFriends?username=" + UserFromPrevWindow;
+            String downLoadUri = ipAddress + "getMyFriends?username=" + UserFromPrevWindow;
 
             URL url = new URL(downLoadUri);
 
@@ -340,7 +342,7 @@ Handler handler = new Handler() {
         Log.e("UserLoginInfo",UserName + "kkkk");
         String Return_code = "";
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.0.0.24:3000/shareAlbum");
+        HttpPost httppost = new HttpPost(ipAddress + "shareAlbum");
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);

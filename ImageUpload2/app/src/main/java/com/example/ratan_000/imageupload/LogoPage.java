@@ -24,7 +24,7 @@ public class LogoPage extends ActionBarActivity {
                 Log.e("Options", "Entering to App.......");
                 Intent Login = new Intent(getApplicationContext(),login.class);
                 startActivity(Login);
-
+                overridePendingTransition(R.layout.ani1, R.layout.ani2);
 
             }
 

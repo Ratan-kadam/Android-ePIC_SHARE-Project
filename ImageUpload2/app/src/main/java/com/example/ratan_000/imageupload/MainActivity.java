@@ -11,22 +11,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Handler;
-import android.os.Message;
+
+import org.apache.http.util.ByteArrayBuffer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -38,42 +38,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-
-
-import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
-import android.content.CursorLoader;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.apache.http.util.ByteArrayBuffer;
-
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.logging.LogRecord;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    Button imgsel,upload,getImage,AlbumList,otherOptions;
+    Button imgsel,upload,AlbumList;
     Bitmap bmp;
     GridView gridView;
     ArrayList<Bitmap> aBmp = new ArrayList<Bitmap>();
@@ -82,15 +52,15 @@ public class MainActivity extends ActionBarActivity {
     String path;
     TextView userName;
     SharedPreferences sharedinfo;
-
+    EditText imageCaption,imageDescription;
 
 
     TextView messageText,FinalView;
     Button uploadButton;
     int serverResponseCode = 0;
     ProgressDialog dialog = null;
-
-    String upLoadServerUri = "http://10.0.0.24:3000/storePhoto";
+    String ipAddress = "http://52.24.17.228:3000/";
+    String upLoadServerUri = ipAddress + "storePhoto";
 
     /**********  File Path *************/
     final String uploadFilePath = "/mnt/sdcard/";
@@ -105,19 +75,22 @@ public class MainActivity extends ActionBarActivity {
         String welcome = "Welcome " + User;
         Log.e("USER",User+"");
         userName.setText(welcome);
-       gridView = (GridView) findViewById(R.id.gridview);
+   //     gridView = (GridView) findViewById(R.id.gridview);
         img = (ImageView)findViewById(R.id.img);
-        getImage = (Button) findViewById(R.id.getImage);
+     //   getImage = (Button) findViewById(R.id.getImage);
         imgsel = (Button)findViewById(R.id.selimg);
+        imgsel.setVisibility(View.INVISIBLE); // at starting invisible
         upload =(Button)findViewById(R.id.uploadimg);
-        upload.setVisibility(View.INVISIBLE);
+        upload.setVisibility(View.INVISIBLE);// at starting  invisible.
         AlbumList = (Button) findViewById(R.id.AlbumList);
         FinalView = (TextView) findViewById(R.id.finalAlbum);
-        otherOptions= (Button) findViewById((R.id.OtherOptions));
+       // otherOptions= (Button) findViewById((R.id.OtherOptions));
+       imageCaption = (EditText) findViewById(R.id.Caption);
+      imageDescription = (EditText) findViewById(R.id.Description);
 
 
-
-        otherOptions.setOnClickListener(new View.OnClickListener() {
+        //FinalView.setText("");
+      /*  otherOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("Options", "Entered to Other Options");
@@ -127,28 +100,43 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(Options);
 
 
+
+
             }
 
-        });
+        });*/
 
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Path", path+" path");
-                Toast.makeText(MainActivity.this,"path "+path,Toast.LENGTH_LONG).show();
+                Log.e("Path", path + " path");
+
                 File f = new File(path);
 
-                Thread th = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        uploadFile(path);
-                    }
-                });
+                if (imageCaption.getText().toString().length() > 0 && imageDescription.getText().toString().length() > 0) {
 
-                th.start();
+                    Thread th = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            uploadFile(path);
+                            handlerUpload.sendEmptyMessage(0);
 
+                        }
+                    });
+
+                    th.start();
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"ENTER NAME & DESCRIPTION",Toast.LENGTH_SHORT).show();
+                }
             }
+
+
+
+
 
         });
 
@@ -168,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
 
         });
 
-        getImage.setOnClickListener(new View.OnClickListener() {
+      /*  getImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("dd", "Clicked get Image button");
@@ -186,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
 
-        });
+        });*/
 
         imgsel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,6 +183,7 @@ public class MainActivity extends ActionBarActivity {
                 fintent.setType("image/jpeg");
                 try {
                     startActivityForResult(fintent, 100);
+                    overridePendingTransition(R.layout.ani3, R.layout.ani4);
                 } catch (ActivityNotFoundException e) {
 
                 }
@@ -209,9 +198,17 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
         //Control will come here after the Album name is selected ..
         sharedinfo = getSharedPreferences("Albuminfo", Context.MODE_PRIVATE);
+
         String AlbumName = sharedinfo.getString("AlbumSelected","");
-        Toast.makeText(MainActivity.this,"ppppp"+ AlbumName,Toast.LENGTH_SHORT).show();
-        FinalView.setText(AlbumName);
+        int flag =0;
+         flag = sharedinfo.getInt("flag",0);
+        if(flag == 1 )
+        {
+            FinalView.setText(AlbumName);
+           // Toast.makeText(MainActivity.this,"Here..",Toast.LENGTH_LONG).show();
+            imgsel.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(),"Select Image now",Toast.LENGTH_SHORT).show();
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -223,6 +220,7 @@ public class MainActivity extends ActionBarActivity {
                     path = getPathFromURI(data.getData());
                     img.setImageURI(data.getData());
                     upload.setVisibility(View.VISIBLE);
+                    Toast.makeText(getApplicationContext(),"Enter Description..",Toast.LENGTH_SHORT);
 
                 }
         }
@@ -253,10 +251,60 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-      /*  if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+      if (id == R.id.Menu_gotoOptions) {
+          Intent window2 = new Intent(getApplicationContext(),options.class);
+          window2.putExtra("UserFromPrevWindow",User);
+          // window2.putExtra("Email-id","ratan"); // Sending Email ID to window2 Location.
+          startActivity(window2);
+          overridePendingTransition(R.layout.ani3, R.layout.ani4);
+     //       startActivity(new Intent(this, options.class));
             return true;
-        }*/
+        }
+        //noinspection SimplifiableIfStatement
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.Menu_gotoAlbums) {
+            Intent window2 = new Intent(getApplicationContext(),ShowMyAlbums.class);
+            window2.putExtra("UserFromPrevWindow",User);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.Menu_gotoFriends) {
+            Intent window2 = new Intent(getApplicationContext(),showMyFriends.class);
+            window2.putExtra("UserFromPrevWindow",User);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.Menu_gotoGroups) {
+            Intent window2 = new Intent(getApplicationContext(),showMyGroupMembers.class);
+            window2.putExtra("UserFromPrevWindow",User);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+
+        if (id == R.id.action_find) {
+            Intent window2 = new Intent(getApplicationContext(),searchImage.class);
+            window2.putExtra("UserFromPrevWindow",User);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani1, R.layout.ani2);
+            return true;
+        }
+        if (id == R.id.Menu_Logout) {
+            Intent window2 = new Intent(getApplicationContext(),login.class);
+            //window2.putExtra("UserFromPrevWindow",User);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani1, R.layout.ani2);
+            return true;
+        }
+
+
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -271,6 +319,9 @@ public class MainActivity extends ActionBarActivity {
         String lineEnd = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
+        String Caption  = imageCaption.getText().toString();
+        String Description  = imageDescription.getText().toString();
+
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
@@ -314,7 +365,9 @@ public class MainActivity extends ActionBarActivity {
                 conn.setRequestProperty("yyyy", fileName);
 
                 dos = new DataOutputStream(conn.getOutputStream());
-                String r= User + "|" + FinalView.getText().toString();
+                // user + album + image caption + description
+               // String r= User + "|" + FinalView.getText().toString() + "|" + Caption + "|" +  Description;
+                String r = User + "|" + FinalView.getText().toString() + "|" + imageCaption.getText().toString()  + "|" +  imageDescription.getText().toString() + "|";
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=image ; user ="+ r +"; filename=" + fileName + "" + lineEnd);
 
@@ -365,6 +418,10 @@ public class MainActivity extends ActionBarActivity {
                            // messageText.setText(msg);
                             Toast.makeText(MainActivity.this, "File Upload Complete.",
                                     Toast.LENGTH_SHORT).show();
+
+                            imageCaption.setText("");
+                            imageDescription.setText("");
+
                         }
                     });
                 }
@@ -421,7 +478,7 @@ public class MainActivity extends ActionBarActivity {
 
 
              //   String downLoadUri = "http://10.0.0.24:3000/getImage/{imageName}";// = " + imageName;
-                String downLoadUri = "http://10.0.0.24:3000/getImage?imageName=" + imageName;
+                String downLoadUri = ipAddress + "getImage?imageName=" + imageName;
                 URL url = new URL(downLoadUri);
 
                 // Open a HTTP  connection to  the URL
@@ -479,7 +536,7 @@ public class MainActivity extends ActionBarActivity {
         try {
 
 
-            String downLoadUri = "http://10.0.0.24:3000/getListImages";
+            String downLoadUri = ipAddress + "getListImages";
 
             URL url = new URL(downLoadUri);
 
@@ -564,6 +621,7 @@ public class MainActivity extends ActionBarActivity {
         AlbumListView.putExtra("LoginUser",User);
         Log.e("vvvv",User);
         startActivity(AlbumListView);
+        overridePendingTransition(R.layout.ani3, R.layout.ani4);
         /// When Activity - Select Album - finish() methos will take place it will goto OnResume method.
 
 
@@ -572,11 +630,21 @@ public class MainActivity extends ActionBarActivity {
 
 
 
+    Handler handlerUpload = new Handler() {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            Toast.makeText(MainActivity.this,"File Uploaded Successfully..",Toast.LENGTH_LONG).show();
+
+        }
+
+    };
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg)
         {
-            Toast.makeText(MainActivity.this,"Here",Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this,"Here",Toast.LENGTH_LONG).show();
 
         }
 
@@ -588,10 +656,16 @@ public class MainActivity extends ActionBarActivity {
         public void handleMessage(Message msg)
         {
             //Adapter adp =  new ImageAdapter(MainActivity.this,aBmp);
-            gridView.setAdapter(new ImageAdapter(MainActivity.this,aBmp));
+       //     gridView.setAdapter(new ImageAdapter(MainActivity.this,aBmp));
            // adp.notify();
             //img.setImageBitmap(bmp);
         }
 
     };
+
+    public void onBackPressed() {
+        //doing nothing on pressing Back key
+        finish();
+       //  overridePendingTransition(R.layout.ani5,R.layout.ani6);
+    }
 }

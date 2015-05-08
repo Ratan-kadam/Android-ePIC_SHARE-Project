@@ -1,6 +1,39 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+    <item android:id="@+id/Menu_gotoAlbums" android:title="Albums"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_gotoFriends" android:title="Friends"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_gotoGroups" android:title="Groups"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_gotoOptions" android:title="Other Options"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_Logout" android:title="Logout"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_find"
+        android:icon="@drawable/find"
+        android:title="AddAlbum"
+        app:showAsAction="always" />
+
+    <!-- <item android:id="@+id/Menu_AddFriends" android:title="Add Friends"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_ShowGroupMembers" android:title="Show Group Members"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_AddMembersToGroup" android:title="Add Members to Group"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_ShareAlbum" android:title="Share Album"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_DisplayMyAlbums" android:title="Show My Albums"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_ShareAlbumWithGroup" android:title="Share Album With Group"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_SearchImage" android:title="Search Image"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_CreateAlbums" android:title="Create Albums"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_AddGroup" android:title="Create Groups"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/Menu_Delete" android:title="Delete"
+        android:orderInCategory="100" app:showAsAction="never" />-->
 </menu>

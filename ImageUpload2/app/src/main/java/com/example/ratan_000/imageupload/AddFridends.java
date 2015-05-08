@@ -1,12 +1,11 @@
 package com.example.ratan_000.imageupload;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +44,7 @@ String[] AlbumList = null;
 TextView AlbumSelected;
 SharedPreferences sharedpref;
 String User="";
+String ipAddress = "http://52.24.17.228:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +132,7 @@ String User="";
         Log.e("UserLoginInfo",UserName + "kkkk");
         String Return_code = "";
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.0.0.24:3000/addFriend");
+        HttpPost httppost = new HttpPost(ipAddress + "addFriend");
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -148,6 +148,7 @@ String User="";
             Log.e("Return_code", a+"");
             if(a.equals("success")){
                 //if(true){// testing purpose
+                handler2.sendEmptyMessage(0);
                 Log.e("data","SuccessFull Added New Friend");
 
 
@@ -156,6 +157,7 @@ String User="";
             {
                // Toast.makeText(getApplicationContext(), "Wrong UserID / Password", Toast.LENGTH_SHORT).show();
                 Log.d("errr","Err in adding new Friend..");
+                handler2.sendEmptyMessage(-1);
             }
 
 
@@ -178,7 +180,7 @@ String User="";
         try {
 
 
-            String downLoadUri = "http://10.0.0.24:3000/getListUser";
+            String downLoadUri = ipAddress + "getListUser";
 
             URL url = new URL(downLoadUri);
 
@@ -244,6 +246,14 @@ String User="";
         handler.sendEmptyMessage(0);
 
     }
+
+    Handler handler2 = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Toast.makeText(getApplicationContext(), "Friend Added to List Successfully..", Toast.LENGTH_LONG).show();
+        }
+
+    };
 
     Handler handler = new Handler() {
         @Override

@@ -5,6 +5,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/bj_c"
+    android:alpha=".70"
     tools:context="com.example.ratan_000.imageupload.SharingAlubumWithFriend">
 
     <TextView
@@ -13,7 +15,8 @@
         android:text="Share Album to Friend"
         android:id="@+id/textView7"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textColor="#ff3610a0" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,25 +25,27 @@
         android:layout_gravity="center_horizontal" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="318dp"
+        android:layout_height="81dp"
         android:id="@+id/listView3"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight=".7" />
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Selected Album"
         android:id="@+id/SelectedAlbum"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ff3610a0" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="318dp"
+        android:layout_height="250dp"
         android:id="@+id/listView4"
         android:layout_gravity="center_horizontal"
-        android:layout_weight=".4" />
+
+        />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,5 +59,7 @@
         android:layout_height="wrap_content"
         android:text="Share"
         android:id="@+id/ButtonShare"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#ff3610a0"
+        android:textColor="#fffbfff8" />
 </LinearLayout>

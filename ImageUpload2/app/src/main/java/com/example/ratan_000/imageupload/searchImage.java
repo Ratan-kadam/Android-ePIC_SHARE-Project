@@ -1,7 +1,9 @@
 package com.example.ratan_000.imageupload;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -20,6 +23,7 @@ import org.apache.http.util.ByteArrayBuffer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -37,8 +41,8 @@ public class searchImage extends ActionBarActivity {
     Bitmap bmp;
     int serverResponseCode = 0;
     String UserFromPrevWindow2;
-
-
+    String ipAddress = "http://52.24.17.228:3000/";
+    String[] forZoom;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,24 @@ public class searchImage extends ActionBarActivity {
 
             }
 
+        });
+
+        searchGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ImageView imgv = (ImageView) view;
+                Bitmap bitmap = ((BitmapDrawable) imgv.getDrawable()).getBitmap();
+                Log.e("BitMap",bitmap+"00");
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bytes = stream.toByteArray();
+                Intent Zoom = new Intent(getApplicationContext(),ZoomImage.class);
+                Zoom.putExtra("BitMap",bytes);
+                Zoom.putExtra("imgName",forZoom[i]);
+                startActivity(Zoom);
+
+            }
         });
 
     }
@@ -103,7 +125,7 @@ public class searchImage extends ActionBarActivity {
 
 
             //   String downLoadUri = "http://10.0.0.24:3000/getImage/{imageName}";// = " + imageName;
-            String downLoadUri = "http://10.0.0.24:3000/getImage?imageName=" + imageName;
+            String downLoadUri = ipAddress + "getImage?imageName=" + imageName;
             URL url = new URL(downLoadUri);
 
             // Open a HTTP  connection to  the URL
@@ -161,7 +183,7 @@ public class searchImage extends ActionBarActivity {
         try {
 
 
-            String downLoadUri = "http://10.0.0.24:3000/searchImage?username="+ UserFromPrevWindow2 +"&caption="+ searchText.getText().toString() ;
+            String downLoadUri = ipAddress + "searchImage?username="+ UserFromPrevWindow2 +"&caption="+ searchText.getText().toString() ;
 
             URL url = new URL(downLoadUri);
 
@@ -197,12 +219,15 @@ public class searchImage extends ActionBarActivity {
             Log.e("New String", s);
 
             s = s.substring(1, s.length() - 1);
-
+            aBmp = new ArrayList<>();
             String[] strings = s.split(",");
+            int i = 0;
+            forZoom = new String[strings.length];
             for(String Imgname : strings)
             {
                 Imgname = Imgname.substring(1, Imgname.length()-1);
                 Log.e("String1", Imgname);
+                forZoom[i++] = Imgname;
                 getAlbum(Imgname);
             }
             //////

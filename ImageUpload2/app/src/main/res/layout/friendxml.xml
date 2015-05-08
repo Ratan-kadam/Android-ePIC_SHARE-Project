@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:alpha=".70"
     android:layout_width="match_parent" android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
@@ -7,6 +8,8 @@
         android:text="New Text"
         android:id="@+id/FriendXmlTextView"
         android:layout_gravity="center_horizontal"
+        android:background="@color/common_action_bar_splitter"
         android:gravity="center_horizontal"
-        android:textColor="#ff381aff" />
+        android:textColor="#ff381aff"
+        android:padding="2dp" />
 </LinearLayout>

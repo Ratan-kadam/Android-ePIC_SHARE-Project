@@ -4,6 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/bj_c"
+    android:alpha=".70"
     tools:context="com.example.ratan_000.imageupload.login">
 
     <LinearLayout
@@ -14,12 +16,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email Address"
+            android:text="User Name"
             android:id="@+id/textView"
             android:clickable="false"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:textColor="#ff3610a0" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -35,7 +38,8 @@
             android:text="Password"
             android:id="@+id/textView2"
             android:layout_gravity="center_horizontal"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#ff3610a0" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -50,7 +54,9 @@
             android:layout_height="wrap_content"
             android:text="Enter to EPIC SHARE"
             android:id="@+id/ButtonLogin"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:background="#ff1a940a"
+            android:textColor="#ff3610a0" />
 
     </LinearLayout>
 
@@ -62,6 +68,38 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:background="#ff3610a0"
+        android:layout_margin="20dp"
+        android:textColor="#fffbfff8" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/LogoutButton"
+        android:background="#ffff2924"
+        android:layout_below="@+id/ButtonSignUp"
+        android:layout_alignLeft="@+id/ButtonSignUp"
+        android:layout_alignStart="@+id/ButtonSignUp"
+        android:textColor="#fffbfff8"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/angry_btn"
+
+        android:text="Button"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:background="@drawable/b"
+        android:visibility="invisible"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        />
 
 </RelativeLayout>

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ImageAdapter extends BaseAdapter{
     private Context mContext;
     private ArrayList<Bitmap> sample;
-
+    String ipAddress = "http://52.24.17.228:3000/";
 
     public ImageAdapter(Context c,ArrayList<Bitmap> sample) {
         mContext = c;

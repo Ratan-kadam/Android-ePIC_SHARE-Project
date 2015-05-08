@@ -1,10 +1,9 @@
 package com.example.ratan_000.imageupload;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,16 +28,19 @@ import java.util.List;
 public class CreateAlbum extends ActionBarActivity {
     Button AlbumSubmit;
     TextView AlbumName;
+    TextView Album_Desc;
     String UserFromPrevWindow1;
-
+    String ipAddress = "http://52.24.17.228:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_album);
         AlbumName =(TextView)findViewById(R.id.AlbumName);
+        Album_Desc =(TextView)findViewById(R.id.Album_Desc);
         AlbumSubmit =(Button)findViewById(R.id.createAlbum);
         UserFromPrevWindow1 = getIntent().getStringExtra("UserFromPrevWindow");
+
 
         AlbumSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,12 +91,13 @@ public class CreateAlbum extends ActionBarActivity {
         Log.e("re","reached");
         String Return_code = "";
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.0.0.24:3000/createAlbum");
+        HttpPost httppost = new HttpPost(ipAddress + "createAlbum");
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("albumname",AlbumName.getText().toString() ));
             nameValuePairs.add(new BasicNameValuePair("username", UserFromPrevWindow1));
+            nameValuePairs.add(new BasicNameValuePair("description", Album_Desc.getText().toString()));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             Log.e("re","reached0");
             // Execute HTTP Post Request
@@ -105,12 +108,13 @@ public class CreateAlbum extends ActionBarActivity {
             if(a.equals("success")){
                 //if(true){// testing purpose
                 Log.e("data","SuccessFull Album Creation");
+
                 // Intent window2 = new Intent(getApplicationContext(),MainActivity.class);
                 // Log.e("EMail Extraction ",EmailID.getText()+"");
                 // window2.putExtra("Email-id",EmailID.getText()+""); // Sending Email ID to window2 Location.
 
-                // sharedpref = getSharedPreferences("Albuminfo", Context.MODE_PRIVATE);
-                //SharedPreferences.Editor editor = sharedpref.edit();
+             //   sharedpref = getSharedPreferences("Albuminfo", Context.MODE_PRIVATE);
+               // SharedPreferences.Editor editor = sharedpref.edit();
                 //Log.e("Shared pref val:", EmailID.getText().toString());
                 //editor.putString("UserLoginInfo", EmailID.getText().toString());
                 //editor.apply();
@@ -120,8 +124,8 @@ public class CreateAlbum extends ActionBarActivity {
             }
             else
             {
-                Toast.makeText(getApplicationContext(), "Error during adding Album", Toast.LENGTH_SHORT).show();
-                Log.d("errr","wrong userID / Password");
+//                Toast.makeText(getApplicationContext(), "Error during adding Album", Toast.LENGTH_SHORT).show();
+                Log.d("errr", "wrong userID / Password");
             }
 
 
@@ -131,4 +135,14 @@ public class CreateAlbum extends ActionBarActivity {
             // TODO Auto-generated catch block
         }
     }
+
+    Handler handlerGet33 = new Handler() {
+        @Override
+        public void handleMessage(Message msg)
+        {
+
+            Toast.makeText(getApplicationContext(), "Album Created successfully...", Toast.LENGTH_SHORT).show();
+            finish();
+
+        }};
 }

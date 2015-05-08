@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:alpha=".70"
+    android:gravity="center_horizontal"
+    android:padding="2dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -10,6 +12,9 @@
         android:id="@+id/xmlTextView"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
-        android:textColor="#ff381aff" />
+        android:textColor="#ff381aff"
+        android:background="@color/common_action_bar_splitter"
+        android:textSize="24dp"
+        android:textIsSelectable="false" />
        />
 </LinearLayout>

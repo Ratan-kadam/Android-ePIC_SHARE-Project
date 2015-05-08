@@ -11,5 +11,20 @@
     <string name="title_activity_add_fridends">AddFridends</string>
     <string name="title_activity_shared_albums">SharedAlbums</string>
     <string name="title_activity_sharing_alubum_with_friend">SharingAlubumWithFriend</string>
+    <string name="title_activity_show_my_albums">ShowMyAlbums</string>
+    <string name="title_activity_zoom_image">ZoomImage</string>
+    <string name="title_activity_create_album">CreateAlbum</string>
+    <string name="title_activity_create_group">CreateGroup</string>
+    <string name="title_activity_crtegrp">crtegrp</string>
+    <string name="title_activity_logo_page">LogoPage</string>
+    <string name="title_activity_search_image">searchImage</string>
+    <string name="title_activity_share_albumwith_group">shareAlbumwithGroup</string>
+    <string name="title_activity_add_members_to_group">AddMembersToGroup</string>
+    <string name="title_activity_add_member2">addMember2</string>
+    <string name="title_activity_show_my_group_members">showMyGroupMembers</string>
+    <string name="title_activity_delete">DeleteActivity</string>
+    <string name="title_activity_show_my_friends">showMyFriends</string>
+    <string name="title_activity_delete_album">DeleteAlbum</string>
+    <string name="title_activity_invite">invite</string>
 
 </resources>

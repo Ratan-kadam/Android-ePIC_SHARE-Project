@@ -1,14 +1,13 @@
 package com.example.ratan_000.imageupload;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -28,6 +27,7 @@ public class crtegrp extends ActionBarActivity {
  Button crtgrp;
  EditText crttext;
     String UserFromPrevWindow1;
+    String ipAddress = "http://52.24.17.228:3000/";
 // TextView crttext =(TextView)findViewById(R.id.crttext);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class crtegrp extends ActionBarActivity {
         Log.e("re","reachednnnnnnnnnn");
         String Return_code = "";
         HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost("http://10.0.0.24:3000/createGroup");
+        HttpPost httppost = new HttpPost(ipAddress + "createGroup");
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);

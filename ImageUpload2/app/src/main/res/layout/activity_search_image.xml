@@ -16,7 +16,8 @@
         android:text="SEARCH IMAGE"
         android:id="@+id/textView11"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textColor="#ff3610a0" />
 
     <EditText
         android:layout_width="match_parent"
@@ -29,20 +30,35 @@
         android:layout_height="wrap_content"
         android:text="Search Images"
         android:id="@+id/searchImage"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#ff3610a0"
+        android:textColor="#fffbfff8"
+        android:layout_margin="20dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="upload Images"
         android:id="@+id/uploadSearch"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
 
-    <GridView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="SEARCH RESULT"
+        android:id="@+id/textView25"
+        android:layout_margin="10px"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textColor="#ff3610a0" />
+
+    <GridView
+        android:layout_width="287dp"
+        android:layout_height="226dp"
         android:id="@+id/searchGrid"
         android:layout_gravity="center_horizontal"
-        android:numColumns="auto_fit" />
+        android:numColumns="auto_fit"
+        android:layout_margin="20dp" />
 
 </LinearLayout>

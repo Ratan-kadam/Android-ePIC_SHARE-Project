@@ -41,11 +41,13 @@ ListView listView6;
 GridView mySelectedAlbumGrid;
 Button showMySelectedAlbum;
 String[] AlbumList = null;
+String[] forZoom=null;
 TextView AlbumSelected;
 String SelectedAlbum;
 int serverResponseCode = 0;
 ArrayList<Bitmap> aBmp = new ArrayList<Bitmap>();
 Bitmap bmp;
+String ipAddress = "http://52.24.17.228:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,10 @@ Bitmap bmp;
         mySelectedAlbumGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              // forZoom[i-1].toString()"
+                Toast.makeText( getApplicationContext(),forZoom[i] ,Toast.LENGTH_LONG).show();
+
+
                 ImageView imgv = (ImageView) view;
                         Bitmap bitmap = ((BitmapDrawable) imgv.getDrawable()).getBitmap();
                 Log.e("BitMap",bitmap+"00");
@@ -80,7 +86,10 @@ Bitmap bmp;
                 byte[] bytes = stream.toByteArray();
                 Intent Zoom = new Intent(getApplicationContext(),ZoomImage.class);
                 Zoom.putExtra("BitMap",bytes);
+                Zoom.putExtra("imgName",forZoom[i]);
+                Zoom.putExtra("UserFromPrevWindow",UserFromPrevWindow);
                 startActivity(Zoom);
+                overridePendingTransition(R.layout.ani3, R.layout.ani4);
 
             }
         });
@@ -128,6 +137,58 @@ Bitmap bmp;
             return true;
         }
 
+        if (id == R.id.action_plus)
+        {
+            //Toast.makeText(getApplicationContext(),"clicled plus",Toast.LENGTH_SHORT).show();
+            Intent window2 = new Intent(getApplicationContext(),CreateAlbum.class);
+            window2.putExtra("UserFromPrevWindow",UserFromPrevWindow);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+
+
+        if (id == R.id.Menu_DeleteAlbum)
+        {
+            Intent window2 = new Intent(getApplicationContext(),DeleteAlbum.class);
+            window2.putExtra("UserFromPrevWindow",UserFromPrevWindow);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+
+        if (id == R.id.action_share)
+        {
+            //Toast.makeText(getApplicationContext(),"clicled plus",Toast.LENGTH_SHORT).show();
+            Intent window2 = new Intent(getApplicationContext(),SharingAlubumWithFriend.class);
+            window2.putExtra("UserFromPrevWindow",UserFromPrevWindow);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+
+        if (id == R.id.Menu_showSharedAlbum)
+        {
+            //Toast.makeText(getApplicationContext(),"clicled plus",Toast.LENGTH_SHORT).show();
+            Intent window2 = new Intent(getApplicationContext(),SharedAlbums.class);
+            window2.putExtra("UserFromPrevWindow",UserFromPrevWindow);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+
+
+
+        if (id == R.id.Menu_gotoShareWithGroup)
+        {
+            //Toast.makeText(getApplicationContext(),"clicled plus",Toast.LENGTH_SHORT).show();
+            Intent window2 = new Intent(getApplicationContext(),shareAlbumwithGroup.class);
+            window2.putExtra("UserFromPrevWindow",UserFromPrevWindow);
+            startActivity(window2);
+            overridePendingTransition(R.layout.ani3, R.layout.ani4);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,7 +203,7 @@ Bitmap bmp;
         try {
 
             Log.e("UserfromPrev:", UserFromPrevWindow + "");
-            String downLoadUri = "http://10.0.0.24:3000/getListAlbum?username=" + UserFromPrevWindow ;
+            String downLoadUri = ipAddress + "getListAlbum?username=" + UserFromPrevWindow ;
 
             URL url = new URL(downLoadUri);
 
@@ -172,6 +233,7 @@ Bitmap bmp;
             int length = strings.length;
             Log.e("ArraySize", Integer.toString(length));
             AlbumList = new String[length];
+   //         forZoom   = new String[length];
             int i = 0;
             for (String Imgname : strings) {
                 //String AlbumName = Imgname.substring(1, Imgname.length() - 1);
@@ -179,6 +241,7 @@ Bitmap bmp;
                 Log.e("String1", AlbumName);
                 Log.e("AlbumName:", AlbumName + "");
                 AlbumList[i] = AlbumName;
+           //     forZoom[i] = AlbumName;
                 Log.e("gg", AlbumList[i]);
                 i++;
             }
@@ -251,7 +314,7 @@ Bitmap bmp;
 
 
             //   String downLoadUri = "http://10.0.0.24:3000/getImage/{imageName}";// = " + imageName;
-            String downLoadUri = "http://10.0.0.24:3000/getImage?imageName=" + imageName;
+            String downLoadUri = ipAddress + "getImage?imageName=" + imageName;
             URL url = new URL(downLoadUri);
 
             // Open a HTTP  connection to  the URL
@@ -322,7 +385,7 @@ Bitmap bmp;
         try {
 
 
-            String downLoadUri = "http://10.0.0.24:3000/getListImages?albumName=" +  SelectedAlbum;
+            String downLoadUri = ipAddress + "getListImages?albumName=" +  SelectedAlbum;
 
             URL url = new URL(downLoadUri);
 
@@ -360,10 +423,14 @@ Bitmap bmp;
             s = s.substring(1, s.length() - 1);
 
             String[] strings = s.split(",");
+            aBmp = new ArrayList<>();
+            forZoom = new String[strings.length];
+            int i = 0;
             for(String Imgname : strings)
             {
                 Imgname = Imgname.substring(1, Imgname.length()-1);
                 Log.e("String1", Imgname);
+                forZoom[i++] = Imgname;
                 getAlbum(Imgname);
             }
             //////
